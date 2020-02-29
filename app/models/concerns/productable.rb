@@ -1,5 +1,9 @@
 module Productable
-  include ActiveSupport::Concern
+  extend ActiveSupport::Concern
+
+  included do
+    has_one :product, as: :productable, dependent: :destroy
+  end
 
   def type
     self.class.name.split('::').last

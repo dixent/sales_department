@@ -18,5 +18,5 @@
   .row.justify-content-md-center
     - Product::LIST_PRODUCTS.each do |product_name|
       .col-4
-        = link_to product_name.capitalize, send("new_manager_products_#{product_name}_path"),
+        = link_to product_name.capitalize, new_manager_productable_path(product_name),
           class: 'btn btn-secondary btn-lg btn-block'

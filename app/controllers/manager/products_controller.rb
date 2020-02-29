@@ -3,26 +3,9 @@ class Manager::ProductsController < ManagerController
     @products = Product.all.includes(:productable)
   end
 
-  def new
-    @product = Product.new
-  end
+  def new; end
 
-  def create
-    @product = Product.new(product_params)
-    if @product.save
-      redirect_to products_path, notice: 'Product created successful!'
-    else
-      render :new
-    end
-  end
+  def edit: end
 
-  private
-
-  def product_params
-    binding.pry
-  end
-
-  def product
-    @product ||= Product.find(params[:id])
-  end
+  def update; end
 end

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resource :home, only: :index
   root to: 'home#index'
   namespace :manager do
-    resources :products
+    resources :products, only: %i[new index edit update]
     namespace :products do
       resources :pens
       resources :pencils

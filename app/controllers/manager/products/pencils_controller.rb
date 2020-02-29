@@ -1,6 +1,6 @@
 class Manager::Products::PencilsController < Manager::ProductsController
   def new
-    @pencil = Products::Pencil.new
+    @pencil = Products::Pencil.new(product: Product.new)
   end
 
   def create
@@ -14,7 +14,30 @@ class Manager::Products::PencilsController < Manager::ProductsController
     end
   end
 
+  def edit
+    @pencil = find_pencil
+  end
+
+  def update
+    @pencil = find_pencil
+    if @pencil.update(pencil_params)
+      flash[:notice] = 'Pencil updated successfully!'
+    end
+
+    render :edit
+  end
+
+  def destroy
+    find_pencil.destroy
+
+    redirect_to redirect_to manager_products_url, notice: 'Pencil removed successfully!'
+  end
+
   private
+
+  def find_pencil
+    Products::Pencil.find(params[:id])
+  end
 
   def pencil_params
     params.require(:products_pencil).permit(:form, :color)
