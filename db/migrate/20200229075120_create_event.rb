@@ -1,4 +1,4 @@
-class CreateEvents < ActiveRecord::Migration[6.0]
+class CreateEvent < ActiveRecord::Migration[6.0]
   def change
     create_table :events do |t|
       t.references :subject, polymorphic: true

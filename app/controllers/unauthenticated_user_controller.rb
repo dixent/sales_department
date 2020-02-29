@@ -1,0 +1,2 @@
+class UnauthenticatedUserController < ApplicationController
+end

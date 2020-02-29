@@ -1,0 +1,22 @@
+/ .container
+/   .row.justify-content-md-center
+/     .col-4
+/       = simple_form_for(@product, url: manager_products_path) do |f|
+/         = f.input :type
+/         = f.input :form
+/         = f.input :color
+/         = f.input :kernel
+/         = f.input :in_stock
+/         = f.submit action_name == 'new' ? 'Create' : 'Save',
+/           class: 'btn btn-secondary'
+
+.container
+  .row
+    h1.h1 Product creation
+  .row.mb-3
+    .dropdown-header.pl-0 Please chose product which you want to create:
+  .row.justify-content-md-center
+    - Product::LIST_PRODUCTS.each do |product_name|
+      .col-4
+        = link_to product_name.capitalize, send("new_manager_products_#{product_name}_path"),
+          class: 'btn btn-secondary btn-lg btn-block'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_04_183938) do
+ActiveRecord::Schema.define(version: 2020_02_29_075254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 2020_02_04_183938) do
     t.index ["subject_type", "subject_id"], name: "index_events_on_subject_type_and_subject_id"
   end
 
+  create_table "pencils", force: :cascade do |t|
+    t.integer "form", null: false
+    t.integer "color", null: false
+  end
+
+  create_table "pens", force: :cascade do |t|
+    t.integer "form", null: false
+    t.integer "kernel", null: false
+  end
+
   create_table "product_sets", force: :cascade do |t|
     t.bigint "product_id"
     t.integer "number"
@@ -33,13 +43,11 @@ ActiveRecord::Schema.define(version: 2020_02_04_183938) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.integer "form"
-    t.integer "color"
-    t.integer "kernel"
+    t.string "productable_type"
+    t.bigint "productable_id"
     t.bigint "in_stock"
     t.bigint "sold"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.index ["productable_type", "productable_id"], name: "index_products_on_productable_type_and_productable_id"
   end
 
   create_table "users", force: :cascade do |t|

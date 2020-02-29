@@ -1,4 +1,4 @@
-class CreateProductSets < ActiveRecord::Migration[6.0]
+class CreateProductSet < ActiveRecord::Migration[6.0]
   def change
     create_table :product_sets do |t|
       t.references :product

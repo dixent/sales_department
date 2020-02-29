@@ -1,0 +1,11 @@
+.row.justify-content-md-center
+  .col-4
+    = simple_form_for(pencil, url: manager_products_pencils_path) do |f|
+      = f.input :form, collection: Products::Pencil.forms.keys
+      = f.input :color, collection: Products::Pencil.colors.keys
+      .form-group.optional
+        = f.simple_fields_for :product do |ff|
+          = ff.label :in_stock
+          = ff.input_field :in_stock, class: 'form-control'
+      = f.submit action_name == 'new' ? 'Create' : 'Save',
+        class: 'btn btn-secondary'
