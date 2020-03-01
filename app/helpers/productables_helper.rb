@@ -1,6 +1,6 @@
 module ProductablesHelper
   def create_manager_productable_path(productable)
-    send("manager_products_#{productable.type.downcase}_path")
+    send("manager_products_#{productable.type.downcase}s_path")
   end
 
   def manager_productable_path(productable)

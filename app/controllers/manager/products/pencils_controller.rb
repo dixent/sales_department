@@ -44,6 +44,6 @@ class Manager::Products::PencilsController < Manager::ProductsController
   end
 
   def product_params
-    params.require(:products_pencil).require(:product).permit(:in_stock)
+    params.require(:products_pencil).require(:product).permit(:in_stock, :price)
   end
 end

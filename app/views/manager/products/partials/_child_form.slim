@@ -1,0 +1,9 @@
+.form-group.optional
+  = f.simple_fields_for product do |ff|
+    = ff.label :in_stock
+    = ff.input_field :in_stock, class: 'form-control'
+    = ff.label :price
+    = ff.input_field :price, class: 'form-control'
+= f.submit action_name == 'new' ? 'Create' : 'Save',
+  class: 'btn btn-secondary'
+
