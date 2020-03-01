@@ -22,6 +22,8 @@
                 = product.sold || 0
               td.text-right
                 .btn-group
+                  = link_to 'Increase', edit_manager_product_path(product),
+                    class: 'btn btn-primary'
                   = link_to 'Show', manager_productable_path(product.productable),
                       class: 'btn btn-success'
                   = link_to 'Edit', edit_manager_productable_path(product.productable),

@@ -1,0 +1,7 @@
+.container
+  .row.justify-content-md-center
+    .col-4
+      = simple_form_for(@product, url: manager_product_path(@product)) do |f|
+        = f.label 'Enter the quantity received'
+        = f.input :in_stock, label: false, input_html: { value: 0 }
+        = f.submit 'Add', class: 'btn btn-secondary'
