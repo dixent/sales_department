@@ -13,9 +13,12 @@ class Manager::ProductsController < ManagerController
     @product = find_product
 
     amount_received = params.dig(:product, :in_stock).to_i
-    if Events::UpdateStockOfProduct.new(@product, amount_received).call
+    if Events::UpdateStockOfProduct.new(
+        product: @product,
+        amount_received: amount_received
+      ).call
       redirect_to manager_products_path, notice:
-        "The stock of #{@product.productable.type}s##{@product.productable.id}" \
+        "The stock of #{@product.productable.type}s##{@product.id}" \
         " is replenished by #{amount_received}"
     else
       render :edit
@@ -26,5 +29,9 @@ class Manager::ProductsController < ManagerController
 
   def find_product
     Product.find(params[:id])
+  end
+
+  def product_params(productable_key:)
+    params.require(productable_key).require(:product).permit(:in_stock, :price)
   end
 end

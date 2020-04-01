@@ -18,10 +18,11 @@ class Manager::Products::PensController < Manager::ProductsController
 
   def update
     @pen = find_pen
-    if @pen.update(pen_params)
-      flash[:notice] = 'Pen updated successfully!'
+    ActiveRecord::Base.transaction do
+      if @pen.update(pen_params) && @pen.product.update(product_params)
+        flash[:notice] = 'Pen updated successfully!'
+      end
     end
-
     render :edit
   end
 
@@ -42,6 +43,6 @@ class Manager::Products::PensController < Manager::ProductsController
   end
 
   def product_params
-    params.require(:products_pen).require(:product).permit(:in_stock, :price)
+    super(productable_key: :products_pen)
   end
 end

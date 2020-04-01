@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_01_145855) do
+ActiveRecord::Schema.define(version: 2020_03_01_163042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,12 @@ ActiveRecord::Schema.define(version: 2020_03_01_145855) do
     t.integer "value", null: false
     t.integer "operation_type", null: false
     t.index ["subject_type", "subject_id"], name: "index_events_on_subject_type_and_subject_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string "user_data", null: false
+    t.date "date_of_saling"
+    t.integer "status", default: 0, null: false
   end
 
   create_table "pencils", force: :cascade do |t|
@@ -40,6 +46,8 @@ ActiveRecord::Schema.define(version: 2020_03_01_145855) do
     t.integer "number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "order_id", null: false
+    t.index ["order_id"], name: "index_product_sets_on_order_id"
     t.index ["product_id"], name: "index_product_sets_on_product_id"
   end
 

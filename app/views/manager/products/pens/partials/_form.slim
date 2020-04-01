@@ -1,6 +1,6 @@
 .row.justify-content-md-center
   .col-4
-    = simple_form_for(pen, url:  create_update_productable_path(pen)) do |f|
+    = simple_form_for(pen, url: url) do |f|
       = f.input :form, collection: Products::Pen.forms.keys
       = f.input :kernel, collection: Products::Pen.kernels.keys
       = render 'manager/products/partials/child_form', f: f, product: pen.product

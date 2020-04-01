@@ -11,8 +11,15 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
         li.nav-item.active
           a.nav-link href="#{new_manager_product_path}"
             | Add product
+      - else current_user && current_user.client?
+        li.nav-item.active
+          a.nav-link href="#{client_products_path}"
+            | Products
+        li.nav-item.active
+          a.nav-link href="#{new_client_product_path}"
+            | Add product
     .my-2.my-lg-0
       - if current_user
         = button_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-outline-info'
       - else
-        = button_to 'Login', new_user_session_path, class: 'btn btn-outline-success'
+        = link_to 'Login', new_user_session_path, class: 'btn btn-outline-success'

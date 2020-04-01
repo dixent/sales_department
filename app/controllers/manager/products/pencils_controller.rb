@@ -20,7 +20,7 @@ class Manager::Products::PencilsController < Manager::ProductsController
 
   def update
     @pencil = find_pencil
-    if @pencil.update(pencil_params)
+    if @pencil.update(pencil_params) && @pen.product.update(product_params)
       flash[:notice] = 'Pencil updated successfully!'
     end
 
@@ -44,6 +44,6 @@ class Manager::Products::PencilsController < Manager::ProductsController
   end
 
   def product_params
-    params.require(:products_pencil).require(:product).permit(:in_stock, :price)
+    super(:products_pencil)
   end
 end

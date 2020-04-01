@@ -1,5 +1,5 @@
 class Events::UpdateStockOfProduct
-  def initialize(product, amount_received)
+  def initialize(product:, amount_received:)
     @product = product
     @amount_received = amount_received
   end
