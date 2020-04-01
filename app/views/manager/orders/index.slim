@@ -1,0 +1,38 @@
+.container
+  .row
+    .col-12
+      table.table.table-bordered
+        thead.thead-dark
+          tr
+            th.align-top #
+            th.align-top User data
+            th.align-top Date of saling
+            th.align-top width='60%' Products
+            th.align-top Order summary price
+        tbody
+          - @orders.find_each do |order|
+            tr
+              th
+                = order.id
+              td
+                = order.date_of_saling.to_s(:long)
+              td
+                = order.user_data
+              td
+                = render 'manager/orders/partials/products_table',
+                  product_sets: order.product_sets
+              td
+                = "$#{order.product_sets.sum(&:summary_price)}"
+              / td.text-right
+              /   .btn-group
+              /     = link_to 'Increase', edit_manager_product_path(product),
+              /       class: 'btn btn-primary'
+              /     = link_to 'Show', manager_productable_path(product.productable),
+              /         class: 'btn btn-success'
+              /     = link_to 'Edit', edit_manager_productable_path(product.productable),
+              /         class: 'btn btn-warning'
+              /     = button_to 'Destroy',  manager_productable_path(product.productable),
+              /       method: :delete, class: 'destroy_button',
+              /       form_class: 'btn btn-danger'
+
+

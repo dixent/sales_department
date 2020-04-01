@@ -1,6 +1,6 @@
 class Manager::OrdersController < ManagerController
   def index
-    @orders = Order.all
+    @orders = Order.all.includes(product_sets: { product: :productable })
   end
 
   def new
