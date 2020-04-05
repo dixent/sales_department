@@ -1,0 +1,10 @@
+.row.justify-content-md-center
+  .col-4
+    = simple_form_for(@order, url: manager_orders_path) do |f|
+      = f.input :user_data, as: :string
+      = f.input :date_of_saling
+      = f.simple_fields_for :product_sets do |product_set|
+        = render 'manager/orders/partials/product_set_fields', f: product_set
+      .links
+        = link_to_add_association 'add product', f, :product_sets
+      = f.submit 'Open', class: 'btn btn-secondary'

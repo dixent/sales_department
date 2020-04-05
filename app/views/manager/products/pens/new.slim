@@ -1,2 +1,3 @@
 .container
-  = render 'manager/products/pens/partials/form', pen: @pen
+  = render 'manager/products/pens/partials/form', pen: @pen,
+                                                  url: create_manager_productable_path(@pen)

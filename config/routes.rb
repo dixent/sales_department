@@ -9,5 +9,14 @@ Rails.application.routes.draw do
       resources :pens
       resources :pencils
     end
+    resources :orders
+  end
+
+  namespace :client do
+    resources :products, only: %i[new index edit update]
+    namespace :products do
+      resources :pens
+      resources :pencils
+    end
   end
 end

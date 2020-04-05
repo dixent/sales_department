@@ -1,0 +1,4 @@
+.nested-fields
+  = f.association :product, collection: @products
+  = f.input :number, as: :integer
+  = link_to_remove_association 'remove product set', f

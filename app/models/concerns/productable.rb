@@ -3,6 +3,7 @@ module Productable
 
   included do
     has_one :product, as: :productable, dependent: :destroy
+    has_many :events, as: :subject
   end
 
   def type

@@ -1,0 +1,15 @@
+table.table
+  thead
+    tr
+      th Name
+      th Number
+      th Summary price
+  tbody
+    - product_sets.find_each do |product_set|
+      tr
+        td
+          = product_set.product.productable.type
+        td
+          = product_set.number
+        td
+          = "$#{product_set.summary_price}"
