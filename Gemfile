@@ -33,7 +33,7 @@ gem 'devise', '~> 4.7.1'
 
 gem 'slim', '~> 4.0.1'
 
-gem 'simple_form', '~> 4.1.0'
+gem 'simple_form', '~> 5.0.0'
 
 gem 'cocoon', '~> 1.2.14'
 
