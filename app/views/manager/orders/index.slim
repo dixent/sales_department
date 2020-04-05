@@ -1,38 +1,52 @@
-.container
-  .row
-    .col-12
-      table.table.table-bordered
-        thead.thead-dark
-          tr
-            th.align-top #
-            th.align-top User data
-            th.align-top Date of saling
-            th.align-top width='60%' Products
-            th.align-top Order summary price
-        tbody
-          - @orders.find_each do |order|
-            tr
-              th
-                = order.id
-              td
-                = order.date_of_saling.to_s(:long)
-              td
-                = order.user_data
-              td
-                = render 'manager/orders/partials/products_table',
-                  product_sets: order.product_sets
-              td
-                = "$#{order.product_sets.sum(&:summary_price)}"
-              / td.text-right
-              /   .btn-group
-              /     = link_to 'Increase', edit_manager_product_path(product),
-              /       class: 'btn btn-primary'
-              /     = link_to 'Show', manager_productable_path(product.productable),
-              /         class: 'btn btn-success'
-              /     = link_to 'Edit', edit_manager_productable_path(product.productable),
-              /         class: 'btn btn-warning'
-              /     = button_to 'Destroy',  manager_productable_path(product.productable),
-              /       method: :delete, class: 'destroy_button',
-              /       form_class: 'btn btn-danger'
-
-
+.col-12
+  .d-inline-flex.align-items-center
+    .h5 Sort:
+    .btn-group.ml-1
+      = link_to 'Closed', manager_orders_url(status: :closed), class: 'btn btn-primary'
+      = link_to 'Reserved', manager_orders_url(status: :reserved), class: 'btn btn-primary'
+      = link_to 'Unreserved', manager_orders_url(status: :unreserved),
+        class: 'btn btn-primary'
+  table.table.table-bordered
+    thead.thead-dark
+      tr
+        th.align-top #
+        th.align-top User data
+        th.align-top Date of saling
+        th.align-top width='60%' Products
+    tbody
+      - @orders.each do |order|
+        tr
+          th
+            = order.id
+          td
+            = order.date_of_saling.to_s(:long)
+          td
+            = order.user_data
+          td
+            = render 'manager/orders/partials/products_table',
+              product_sets: order.product_sets
+        tr
+          td colspan='4'
+            .d-flex.justify-content-between.align-items-start
+              .btn-group
+                - if order.reserved?
+                  = button_to 'Unreserve',
+                    manager_order_path(order, status: 'unreserved'),
+                    method: :patch, class: 'button',
+                    form_class: 'btn btn-primary'
+                - elsif order.unreserved?
+                  = button_to 'Reserve',
+                    manager_order_path(order, status: 'reserved'),
+                    method: :patch, class: 'button',
+                    form_class: 'btn btn-primary'
+                - unless order.closed?
+                  = button_to 'Close', manager_order_path(order, status: 'closed'),
+                    method: :patch, class: 'button',
+                    form_class: 'btn btn-warning'
+                = button_to 'Destroy',  manager_order_path(order),
+                  method: :delete, class: 'button',
+                  form_class: 'btn btn-danger'
+              .p
+                = "Status: #{order.status.capitalize}"
+                .br
+                = "Order summary price: $#{order.product_sets.sum(&:summary_price)}"

@@ -1,6 +1,12 @@
 class Manager::OrdersController < ManagerController
   def index
-    @orders = Order.all.includes(product_sets: { product: :productable })
+    @orders = Order.order(id: :desc).includes(product_sets: { product: :productable })
+
+    if params[:status]
+      @orders = @orders.where(status: params[:status])
+    else
+      @orders = @orders.where.not(status: :closed)
+    end
   end
 
   def new
@@ -11,33 +17,39 @@ class Manager::OrdersController < ManagerController
   end
 
   def create
-    binding.pry
+    @order = Order.new(order_params)
+    if @order.save
+      redirect_to manager_orders_url
+    else
+      render :new
+    end
   end
 
+  def update
+    @order = find_order
 
-  # def edit
-  #   @product = find_product
-  # end
+    unless @order.update(status: params[:status])
+      flash['error'] = 'Status invalid!'
+    end
 
-  # def update
-  #   @product = find_product
+    redirect_to manager_orders_url
+  end
 
-  #   amount_received = params.dig(:product, :in_stock).to_i
-  #   if Events::UpdateStockOfProduct.new(@product, amount_received).call
-  #     redirect_to manager_products_path, notice:
-  #       "The stock of #{@product.productable.type}s##{@product.productable.id}" \
-  #       " is replenished by #{amount_received}"
-  #   else
-  #     render :edit
-  #   end
-  # end
+  def destroy
+    @order = find_order
+
+    @order.destroy
+
+    redirect_to manager_orders_url
+  end
 
   private
 
   def order_params
     params.require(:order).permit(:user_data, :'date_of_saling(1i)', :'date_of_saling(2i)', :'date_of_saling(3i)', product_sets_attributes: [:product_id, :number, :_destroy])
   end
-  # def find_product
-  #   Product.find(params[:id])
-  # end
+
+  def find_order
+    Order.find(params[:id])
+  end
 end

@@ -5,6 +5,6 @@ class Products::Pen < ApplicationRecord
   enum kernel: %i[m l]
 
   def attributes_for_select
-    "form: #{form} | kernel: #{kernel}"
+    "Pen with form: #{form.capitalize} and kernel: #{kernel.capitalize}"
   end
 end

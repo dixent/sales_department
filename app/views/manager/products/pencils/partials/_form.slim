@@ -1,6 +1,6 @@
 .row.justify-content-md-center
   .col-4
-    = simple_form_for(pencil, url: url do |f|
+    = simple_form_for(pencil, url: url) do |f|
       = f.input :form, collection: Products::Pencil.forms.keys
       = f.input :color, collection: Products::Pencil.colors.keys
       = render 'manager/products/partials/child_form', f: f, product: pencil.product

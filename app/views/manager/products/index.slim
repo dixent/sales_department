@@ -4,11 +4,11 @@
       table.table
         thead.thead-dark
           tr
-            th scope='col'  #
-            th scope='col'  Type
-            th scope='col'  In stock
-            th scope='col'  Sold
-            th scope='col'  Price
+            th scope='col' #
+            th scope='col' Type
+            th scope='col' In stock
+            th scope='col' Sold
+            th scope='col' Price
             th.text-right scope='col'  Actions
         tbody
           - @products.each do |product|
@@ -27,12 +27,12 @@
                 .btn-group
                   = link_to 'Increase', edit_manager_product_path(product),
                     class: 'btn btn-primary'
-                  = link_to 'Show', manager_productable_path(product.productable),
-                      class: 'btn btn-success'
+                  / = link_to 'Show', manager_productable_path(product.productable),
+                  /     class: 'btn btn-success'
                   = link_to 'Edit', edit_manager_productable_path(product.productable),
                       class: 'btn btn-warning'
                   = button_to 'Destroy',  manager_productable_path(product.productable),
-                    method: :delete, class: 'destroy_button',
+                    method: :delete, class: 'button',
                     form_class: 'btn btn-danger'
 
 

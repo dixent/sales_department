@@ -5,6 +5,6 @@ class Products::Pencil < ApplicationRecord
   enum color: %i[white black red]
 
   def attributes_for_select
-    "form: #{form} | color: #{color}"
+    "Pencil with form: #{form.capitalize} and color: #{color.capitalize}"
   end
 end
