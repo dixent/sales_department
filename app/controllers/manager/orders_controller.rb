@@ -28,7 +28,15 @@ class Manager::OrdersController < ManagerController
   def update
     @order = find_order
 
-    unless @order.update(status: params[:status])
+    if @order.opened? && %w[unreserved reserved].include?(params[:status]) &&
+      !current_user.leader?
+
+      redirect_to manager_orders_url, alert: 'Access denied!'
+    end
+
+    if @order.update(status: params[:status])
+      UpdateProductsInStock.new(order: @order).call
+    else
       flash['error'] = 'Status invalid!'
     end
 
@@ -46,7 +54,10 @@ class Manager::OrdersController < ManagerController
   private
 
   def order_params
-    params.require(:order).permit(:user_data, :'date_of_saling(1i)', :'date_of_saling(2i)', :'date_of_saling(3i)', product_sets_attributes: [:product_id, :number, :_destroy])
+    params.require(:order).permit(:user_data, :'date_of_saling(1i)',
+                                  :'date_of_saling(2i)', :'date_of_saling(3i)',
+                                  product_sets_attributes:
+                                    [:product_id, :number, :_destroy])
   end
 
   def find_order

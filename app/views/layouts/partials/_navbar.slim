@@ -4,7 +4,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
   a.navbar-brand href="/" Home
   #navbarTogglerDemo03.collapse.navbar-collapse
     ul.navbar-nav.mr-auto.mt-2.mt-lg-0
-      - if current_user && (current_user.manager? || current_user.admin?)
+      - if current_user && (current_user.manager? || current_user.leader?)
         li.nav-item.active
           a.nav-link href="#{manager_products_path}"
             | Products

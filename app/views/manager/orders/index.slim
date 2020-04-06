@@ -29,6 +29,11 @@
           td colspan='4'
             .d-flex.justify-content-between.align-items-start
               .btn-group
+                - if current_user.leader? && order.opened?
+                  = button_to 'Confirm',
+                    manager_order_path(order, status: 'unreserved'),
+                    method: :patch, class: 'button',
+                    form_class: 'btn btn-primary'
                 - if order.reserved?
                   = button_to 'Unreserve',
                     manager_order_path(order, status: 'unreserved'),
