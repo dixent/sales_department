@@ -8,7 +8,7 @@ table.table
     - product_sets.find_each do |product_set|
       tr
         td
-          = product_set.product.productable.type
+          = product_set.product.productable.attributes_for_select
         td
           = product_set.number
         td
