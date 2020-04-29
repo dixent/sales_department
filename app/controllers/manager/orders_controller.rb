@@ -25,6 +25,10 @@ class Manager::OrdersController < ManagerController
     end
   end
 
+  def show
+    @order = Order.includes(product_sets: { product: :productable }).find(params[:id])
+  end
+
   def update
     @order = find_order
 
@@ -54,7 +58,7 @@ class Manager::OrdersController < ManagerController
   private
 
   def order_params
-    params.require(:order).permit(:user_data, :'date_of_saling(1i)',
+    params.require(:order).permit(:user_data, :'date_of_saling(1i)', :lng, :lat,
                                   :'date_of_saling(2i)', :'date_of_saling(3i)',
                                   product_sets_attributes:
                                     [:product_id, :number, :_destroy])

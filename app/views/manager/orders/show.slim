@@ -1,0 +1,30 @@
+.container-fluid
+  .row.justify-content-md-center.align-items-stretch
+    .col-6
+      .card.h-100
+        .card-header
+          | Order
+        .card-body
+          h5.card-title User Data:
+          p.card-text
+            = @order.user_data
+          h5.card-title Status:
+          p.card-text
+            = @order.status.capitalize
+          h5.card-title Date of saling:
+          p.card-text
+            = @order.date_of_saling.to_s(:long)
+          h5.card-title Place of saling:
+          #map.mb-3.orders-show-map lng="#{@order.lng}" lat="#{@order.lat}"
+          = link_to 'Back', :back, class: 'btn btn-primary'
+    .col-6
+      .card.h-100
+        .card-header
+          | Products in Order
+        .card-body.d-flex.flex-column
+          = render 'manager/orders/partials/products_table',
+            product_sets: @order.product_sets
+          h5.mb-0.card-title.font-weight-bold Summary price:
+          p.card-text.font-weight-bold
+            = "$#{@order.product_sets.sum(&:summary_price)}"
+= javascript_pack_tag 'components/orders/show/map'

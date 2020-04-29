@@ -13,7 +13,8 @@ gem 'puma', '~> 4.3'
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 4.0'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
+# Turbolinks makes navigating your web application faster. Read more:
+# https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
@@ -31,11 +32,18 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # Flexible authentication solution for Rails with Warden.
 gem 'devise', '~> 4.7.1'
 
+# Slim is a template language whose goal is reduce the syntax to the essential
+# parts without becoming cryptic.
 gem 'slim', '~> 4.0.1'
 
-gem 'simple_form', '~> 5.0.0'
+# Forms made easy!
+gem 'simple_form', '~> 5.0.2'
 
+# Unobtrusive nested forms handling, using jQuery. Use this and discover cocoon-heaven.
 gem 'cocoon', '~> 1.2.14'
+
+# Integration with OpenStrretMap API
+gem 'open_street_map', '~> 1.2.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

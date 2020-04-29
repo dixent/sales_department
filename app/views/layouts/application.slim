@@ -7,6 +7,8 @@ html
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    / script src='https://api.mapbox.com/mapbox.js/v3.3.0/mapbox.js'
+    / link href='https://api.mapbox.com/mapbox.js/v3.3.0/mapbox.css' rel='stylesheet'
   body
     = render 'layouts/partials/navbar'
     = render_alerts

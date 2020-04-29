@@ -19,9 +19,9 @@
           th
             = order.id
           td
-            = order.date_of_saling.to_s(:long)
-          td
             = order.user_data
+          td
+            = order.date_of_saling.to_s(:long)
           td
             = render 'manager/orders/partials/products_table',
               product_sets: order.product_sets
@@ -29,6 +29,8 @@
           td colspan='4'
             .d-flex.justify-content-between.align-items-start
               .btn-group
+                = link_to 'Show', manager_order_path(order),
+                  class: 'button btn btn-info'
                 - if current_user.leader? && order.opened?
                   = button_to 'Confirm',
                     manager_order_path(order, status: 'unreserved'),
