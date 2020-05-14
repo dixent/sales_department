@@ -2,11 +2,17 @@
   .d-inline-flex.align-items-center
     .h5 Sort:
     .btn-group.ml-1
-      = link_to 'Closed', manager_orders_url(status: :closed), class: 'btn btn-primary'
-      = link_to 'Reserved', manager_orders_url(status: :reserved), class: 'btn btn-primary'
-      = link_to 'Unreserved', manager_orders_url(status: :unreserved),
-        class: 'btn btn-primary'
-  table.table.table-bordered
+      = link_to 'Closed', manager_orders_url(status: :closed, search_by_date: params[:search_by_date]),
+        class: "btn btn-primary #{'active' if params[:status] == 'closed'}"
+      = link_to 'Reserved', manager_orders_url(status: :reserved, search_by_date: params[:search_by_date]),
+        class: "btn btn-primary #{'active' if params[:status] == 'reserved'}"
+      = link_to 'Unreserved', manager_orders_url(status: :unreserved, search_by_date: params[:search_by_date]),
+        class: "btn btn-primary #{'active' if params[:status] == 'unreserved'}"
+      = simple_form_for :search, url: manager_search_order_path(status: params[:status]), html: { class: 'form-inline ml-2' }  do |f|
+        = f.button :submit, 'Search by date', class: 'button btn btn-info'
+        = f.input :query, label: false
+
+  table.table.table-bordered.mt-2
     thead.thead-dark
       tr
         th.align-top #

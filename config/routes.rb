@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :pencils
     end
     resources :orders
+    resource :search_order, only: %i[create]
   end
 
   namespace :client do

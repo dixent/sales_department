@@ -1,11 +1,16 @@
 class Manager::OrdersController < ManagerController
   def index
+    # binding.pry
     @orders = Order.order(id: :desc).includes(product_sets: { product: :productable })
 
     if params[:status]
       @orders = @orders.where(status: params[:status])
     else
       @orders = @orders.where.not(status: :closed)
+    end
+
+    if params[:search_by_date]
+      @orders = @orders.where(date_of_saling: Date.parse(params[:search_by_date]))
     end
   end
 
