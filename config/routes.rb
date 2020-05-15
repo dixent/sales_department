@@ -4,12 +4,13 @@ Rails.application.routes.draw do
   resource :home, only: :index
   root to: 'home#index'
   namespace :manager do
-    resources :products, only: %i[new index edit update]
+    resources :products, only: %i[new index edit update show]
     namespace :products do
       resources :pens
       resources :pencils
     end
     resources :orders
+    resources :clients
     resource :search_order, only: %i[create]
   end
 

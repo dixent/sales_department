@@ -5,7 +5,7 @@ class Manager::Products::PensController < Manager::ProductsController
 
   def create
     @pen = Products::Pen.new(pen_params.merge(product: Product.new(product_params)))
-    if @pen.save
+    if @pen.product.valid? && @pen.save
       redirect_to manager_products_url, notice: 'Pen created successfully!'
     else
       render :new
@@ -29,7 +29,7 @@ class Manager::Products::PensController < Manager::ProductsController
   def destroy
     find_pen.destroy
 
-    redirect_to redirect_to manager_products_url, notice: 'Pen removed successfully!'
+    redirect_to manager_products_url, notice: 'Pen removed successfully!'
   end
 
   private

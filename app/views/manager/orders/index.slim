@@ -16,7 +16,7 @@
     thead.thead-dark
       tr
         th.align-top #
-        th.align-top User data
+        th.align-top Client
         th.align-top Date of saling
         th.align-top width='60%' Products
     tbody
@@ -25,7 +25,7 @@
           th
             = order.id
           td
-            = order.user_data
+            = link_to order.client.attributes_for_select, manager_client_path(order.client)
           td
             = order.date_of_saling.to_s(:long)
           td
@@ -34,31 +34,7 @@
         tr
           td colspan='4'
             .d-flex.justify-content-between.align-items-start
-              .btn-group
-                = link_to 'Show', manager_order_path(order),
-                  class: 'button btn btn-info'
-                - if current_user.leader? && order.opened?
-                  = button_to 'Confirm',
-                    manager_order_path(order, status: 'unreserved'),
-                    method: :patch, class: 'button',
-                    form_class: 'btn btn-primary'
-                - if order.reserved?
-                  = button_to 'Unreserve',
-                    manager_order_path(order, status: 'unreserved'),
-                    method: :patch, class: 'button',
-                    form_class: 'btn btn-primary'
-                - elsif order.unreserved?
-                  = button_to 'Reserve',
-                    manager_order_path(order, status: 'reserved'),
-                    method: :patch, class: 'button',
-                    form_class: 'btn btn-primary'
-                - unless order.closed?
-                  = button_to 'Close', manager_order_path(order, status: 'closed'),
-                    method: :patch, class: 'button',
-                    form_class: 'btn btn-warning'
-                = button_to 'Destroy',  manager_order_path(order),
-                  method: :delete, class: 'button',
-                  form_class: 'btn btn-danger'
+              = render 'manager/orders/partials/buttons_for_manage', order: order
               .p
                 = "Status: #{order.status.capitalize}"
                 .br

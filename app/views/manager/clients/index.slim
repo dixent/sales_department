@@ -1,0 +1,28 @@
+.container
+  .row
+    .col-12
+      table.table
+        thead.thead-dark
+          tr
+            th scope='col' #
+            th scope='col' Full Name
+            th scope='col' Phone Number
+            th.text-right scope='col'  Actions
+        tbody
+          - @clients.each do |client|
+            tr
+              th scope='row'
+                = client.id
+              td
+                = client.full_name
+              td
+                = "+#{client.phone}"
+              td.text-right
+                .btn-group
+                  = link_to 'Edit', edit_manager_client_path(client),
+                      class: 'btn btn-warning'
+                  = button_to 'Destroy',  manager_client_path(client),
+                    method: :delete, class: 'button',
+                    form_class: 'btn btn-danger'
+
+

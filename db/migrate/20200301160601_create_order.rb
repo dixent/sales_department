@@ -4,6 +4,7 @@ class CreateOrder < ActiveRecord::Migration[6.0]
       t.string :user_data, null: false
       t.date :date_of_saling
       t.integer :status, null: false, default: 0
+      t.timestamps
     end
   end
 end

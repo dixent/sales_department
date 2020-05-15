@@ -5,9 +5,9 @@
         .card-header
           | Order
         .card-body
-          h5.card-title User Data:
+          h5.card-title Client:
           p.card-text
-            = @order.user_data
+            = link_to @order.client.attributes_for_select, manager_client_path(@order.client)
           h5.card-title Status:
           p.card-text
             = @order.status.capitalize

@@ -1,0 +1,32 @@
+.container-fluid
+  .row.justify-content-md-center.align-items-stretch
+    .col-6
+      .card.h-100
+        .card-header
+          | Client
+        .card-body
+          h5.card-title Full name:
+          p.card-text
+            = @client.full_name
+          h5.card-title Phone:
+          p.card-text
+            = "+#{@client.phone}"
+          = link_to 'Back', :back, class: 'btn btn-primary'
+    .col-6
+      .card.h-100
+        .card-header
+          | Orders
+        .card-body.d-flex.flex-column
+          table.table.table-bordered.mt-2
+            thead.thead-dark
+              tr
+                th.align-top #
+                th.align-top Date of saling
+            tbody
+              - @client.orders.each do |order|
+                tr
+                  th
+                    = link_to order.id, manager_order_path(order)
+                  td
+                    = order.date_of_saling.to_s(:long)
+

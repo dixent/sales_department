@@ -3,6 +3,7 @@ class CreatePencil < ActiveRecord::Migration[6.0]
     create_table :pencils do |t|
       t.integer :form, null: false
       t.integer :color, null: false
+      t.timestamps
     end
   end
 end

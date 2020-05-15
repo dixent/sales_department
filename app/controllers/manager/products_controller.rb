@@ -5,6 +5,10 @@ class Manager::ProductsController < ManagerController
 
   def new; end
 
+  def show
+    @product = Product.includes(product_sets: { order: :client}).find(params[:id])
+  end
+
   def edit
     @product = find_product
   end
@@ -32,6 +36,10 @@ class Manager::ProductsController < ManagerController
   end
 
   def product_params(productable_key:)
-    params.require(productable_key).require(:product).permit(:in_stock, :price)
+    return @product_params if @product_params
+
+    @product_params = params.require(productable_key).require(:product).permit(:in_stock, :price)
+    @product_params[:available] = @product_params[:in_stock]
+    @product_params
   end
 end

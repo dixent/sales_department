@@ -4,6 +4,8 @@ module Productable
   included do
     has_one :product, as: :productable, dependent: :destroy
     has_many :events, as: :subject
+
+    validates :product, presence: true
   end
 
   def type

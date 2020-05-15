@@ -7,7 +7,7 @@ class Manager::Products::PencilsController < Manager::ProductsController
     @pencil = Products::Pencil.new(
       pencil_params.merge(product: Product.new(product_params))
     )
-    if @pencil.save
+    if @pencil.product.valid? && @pencil.save
       redirect_to manager_products_url, notice: 'Pencil created successfully!'
     else
       render :new
@@ -30,7 +30,7 @@ class Manager::Products::PencilsController < Manager::ProductsController
   def destroy
     find_pencil.destroy
 
-    redirect_to redirect_to manager_products_url, notice: 'Pencil removed successfully!'
+    redirect_to manager_products_url, notice: 'Pencil removed successfully!'
   end
 
   private
