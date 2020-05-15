@@ -1,0 +1,7 @@
+.row.justify-content-md-center
+  .col-4
+    = simple_form_for(client, url: url) do |f|
+      = f.input :full_name
+      = f.input :phone
+      = f.submit 'Save', class: 'btn btn-secondary'
+

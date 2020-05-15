@@ -1,0 +1,22 @@
+.col-12
+  .h3
+    = @product.productable.attributes_for_select
+  table.table.table-bordered.mt-2
+    thead.thead-dark
+      tr
+        th.align-top Number
+        th.align-top Date of saling
+        th.align-top Client
+        th.align-top.align-right Actions
+    tbody
+      - @product.product_sets.each do |product_set|
+        tr
+          th
+            = product_set.number
+          td
+            = product_set.order.date_of_saling.to_s(:long)
+          td
+            = link_to product_set.order.client.attributes_for_select, manager_client_path(product_set.order.client)
+          td colspan='4'
+            .d-flex.justify-content-between.align-items-start
+              = render 'manager/orders/partials/buttons_for_manage', order: product_set.order

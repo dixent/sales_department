@@ -1,10 +1,16 @@
 .row.justify-content-md-center
   .col-4
     = simple_form_for(@order, url: manager_orders_path) do |f|
-      = f.input :user_data, as: :string
+      = f.input :client_id, collection: @clients.to_a
       = f.input :date_of_saling
       = f.simple_fields_for :product_sets do |product_set|
-        = render 'manager/orders/partials/product_set_fields', f: product_set
+        = render 'manager/orders/product_set_fields', f: product_set
       .links
         = link_to_add_association 'add product', f, :product_sets
+      | Unloading place:
+      #map
+      = f.input :lng, as: :hidden, input_html: { 'data-behavior': 'lng' }
+      = f.input :lat, as: :hidden, input_html: { 'data-behavior': 'lat' }
       = f.submit 'Open', class: 'btn btn-secondary'
+
+= javascript_pack_tag 'components/orders/new/map'

@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_01_163042) do
+ActiveRecord::Schema.define(version: 2020_05_15_125426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "clients", force: :cascade do |t|
+    t.string "full_name"
+    t.string "phone"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "events", force: :cascade do |t|
     t.string "subject_type"
@@ -26,19 +33,28 @@ ActiveRecord::Schema.define(version: 2020_03_01_163042) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.string "user_data", null: false
     t.date "date_of_saling"
     t.integer "status", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.float "lng"
+    t.float "lat"
+    t.bigint "client_id", null: false
+    t.index ["client_id"], name: "index_orders_on_client_id"
   end
 
   create_table "pencils", force: :cascade do |t|
     t.integer "form", null: false
     t.integer "color", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "pens", force: :cascade do |t|
     t.integer "form", null: false
     t.integer "kernel", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "product_sets", force: :cascade do |t|
@@ -56,7 +72,10 @@ ActiveRecord::Schema.define(version: 2020_03_01_163042) do
     t.bigint "productable_id"
     t.bigint "in_stock"
     t.bigint "sold"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.float "price", default: 0.0, null: false
+    t.integer "available", default: 0
     t.index ["productable_type", "productable_id"], name: "index_products_on_productable_type_and_productable_id"
   end
 
@@ -73,4 +92,5 @@ ActiveRecord::Schema.define(version: 2020_03_01_163042) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "orders", "clients"
 end

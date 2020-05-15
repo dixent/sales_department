@@ -1,0 +1,45 @@
+import mapboxgl from 'mapbox-gl';
+import MapboxGeocoder from 'mapbox-gl-geocoder';
+
+$(() => {
+  mapboxgl.accessToken = '<%= Rails.application.secrets[:mapbox_token] %>';
+
+  navigator.geolocation.getCurrentPosition(function(position) {
+    $('[data-behavior~=lng]')[0].value = position.coords.longitude;
+    $('[data-behavior~=lat]')[0].value = position.coords.latitude;
+    var map = new mapboxgl.Map({
+      container: 'map', // container id
+      style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+      center: [position.coords.longitude, position.coords.latitude], // starting position [lng, lat]
+      zoom: 15 // starting zoom
+    });
+    var marker = new mapboxgl.Marker()
+      .setLngLat(new mapboxgl.LngLat(position.coords.longitude, position.coords.latitude))
+      .addTo(map);
+
+    map.addControl(
+      new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl
+      })
+    );
+
+    map.addControl(
+      new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true
+        },
+        trackUserLocation: true
+      })
+    );
+
+    map.on('click', function(e) {
+      marker.remove();
+      marker = new mapboxgl.Marker()
+        .setLngLat(new mapboxgl.LngLat(e.lngLat.lng, e.lngLat.lat))
+        .addTo(map);
+      $('[data-behavior~=lng]')[0].value = e.lngLat.lng;
+      $('[data-behavior~=lat]')[0].value = e.lngLat.lat;
+    });
+  });
+})

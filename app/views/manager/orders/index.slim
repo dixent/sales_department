@@ -2,15 +2,21 @@
   .d-inline-flex.align-items-center
     .h5 Sort:
     .btn-group.ml-1
-      = link_to 'Closed', manager_orders_url(status: :closed), class: 'btn btn-primary'
-      = link_to 'Reserved', manager_orders_url(status: :reserved), class: 'btn btn-primary'
-      = link_to 'Unreserved', manager_orders_url(status: :unreserved),
-        class: 'btn btn-primary'
-  table.table.table-bordered
+      = link_to 'Closed', manager_orders_url(status: :closed, search_by_date: params[:search_by_date]),
+        class: "btn btn-primary #{'active' if params[:status] == 'closed'}"
+      = link_to 'Reserved', manager_orders_url(status: :reserved, search_by_date: params[:search_by_date]),
+        class: "btn btn-primary #{'active' if params[:status] == 'reserved'}"
+      = link_to 'Unreserved', manager_orders_url(status: :unreserved, search_by_date: params[:search_by_date]),
+        class: "btn btn-primary #{'active' if params[:status] == 'unreserved'}"
+      = simple_form_for :search, url: manager_search_order_path(status: params[:status]), html: { class: 'form-inline ml-2' }  do |f|
+        = f.button :submit, 'Search by date', class: 'button btn btn-info'
+        = f.input :query, label: false
+
+  table.table.table-bordered.mt-2
     thead.thead-dark
       tr
         th.align-top #
-        th.align-top User data
+        th.align-top Client
         th.align-top Date of saling
         th.align-top width='60%' Products
     tbody
@@ -19,38 +25,16 @@
           th
             = order.id
           td
-            = order.date_of_saling.to_s(:long)
+            = link_to order.client.attributes_for_select, manager_client_path(order.client)
           td
-            = order.user_data
+            = order.date_of_saling.to_s(:long)
           td
             = render 'manager/orders/partials/products_table',
               product_sets: order.product_sets
         tr
           td colspan='4'
             .d-flex.justify-content-between.align-items-start
-              .btn-group
-                - if current_user.leader? && order.opened?
-                  = button_to 'Confirm',
-                    manager_order_path(order, status: 'unreserved'),
-                    method: :patch, class: 'button',
-                    form_class: 'btn btn-primary'
-                - if order.reserved?
-                  = button_to 'Unreserve',
-                    manager_order_path(order, status: 'unreserved'),
-                    method: :patch, class: 'button',
-                    form_class: 'btn btn-primary'
-                - elsif order.unreserved?
-                  = button_to 'Reserve',
-                    manager_order_path(order, status: 'reserved'),
-                    method: :patch, class: 'button',
-                    form_class: 'btn btn-primary'
-                - unless order.closed?
-                  = button_to 'Close', manager_order_path(order, status: 'closed'),
-                    method: :patch, class: 'button',
-                    form_class: 'btn btn-warning'
-                = button_to 'Destroy',  manager_order_path(order),
-                  method: :delete, class: 'button',
-                  form_class: 'btn btn-danger'
+              = render 'manager/orders/partials/buttons_for_manage', order: order
               .p
                 = "Status: #{order.status.capitalize}"
                 .br

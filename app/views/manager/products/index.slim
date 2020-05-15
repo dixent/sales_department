@@ -7,6 +7,8 @@
             th scope='col' #
             th scope='col' Type
             th scope='col' In stock
+            th scope='col' Available
+            th scope='col' Reserved
             th scope='col' Sold
             th scope='col' Price
             th.text-right scope='col'  Actions
@@ -14,11 +16,15 @@
           - @products.each do |product|
             tr
               th scope='row'
-                = product.id
+                = link_to product.id, manager_product_path(product)
               td
                 = product.productable.type
               td
                 = product.in_stock
+              td
+                = product.available
+              td
+                = product.in_stock - product.available
               td
                 = product.sold || 0
               td
@@ -27,8 +33,6 @@
                 .btn-group
                   = link_to 'Increase', edit_manager_product_path(product),
                     class: 'btn btn-primary'
-                  / = link_to 'Show', manager_productable_path(product.productable),
-                  /     class: 'btn btn-success'
                   = link_to 'Edit', edit_manager_productable_path(product.productable),
                       class: 'btn btn-warning'
                   = button_to 'Destroy',  manager_productable_path(product.productable),
