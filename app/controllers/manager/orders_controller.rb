@@ -21,10 +21,14 @@ class Manager::OrdersController < ManagerController
 
   def create
     @order = Order.new(order_params)
+    @clients = init_clients
+
     if @order.save
       redirect_to manager_orders_url
     else
       @products = init_products
+      @clients = init_clients
+
       flash[:alert] = 'Please add products!' if @order.product_sets.blank?
       error_product_sets = @order.errors[:product_sets].first
       flash[:alert] = error_product_sets if error_product_sets
@@ -69,7 +73,7 @@ class Manager::OrdersController < ManagerController
     redirect_back(fallback_location: manager_orders_url)
   rescue ActiveRecord::RecordInvalid => e
     flash['alert'] = e.message
-    redirect_back
+    redirect_back(fallback_location: manager_orders_url)
   end
 
   def destroy
